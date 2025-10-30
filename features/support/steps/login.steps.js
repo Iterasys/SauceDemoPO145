@@ -1,16 +1,16 @@
 import { Given, When, Then } from '@cucumber/cucumber'
-import { chromium } from 'playwright'
+//import { chromium } from 'playwright'
 import LoginPage from '../pages/LoginPage.js'
 import InventoryPage from '../pages/InventoryPage.js'
 
-let browser, context, page      // variaveis para o Playwright
+//let browser, context, page      // variaveis para o Playwright
 let loginPage, inventoryPage    // variaveis para os mapeamentos de páginas
 
  
 Given('que estou na pagina de login', async () => {
-    browser = await chromium.launch( {headless: false})
-    context = await browser.newContext()
-    page = await context.newPage()
+    // browser = await chromium.launch( {headless: false})
+    // context = await browser.newContext()
+    // page = await context.newPage()
     loginPage = new LoginPage(page) // instanciar o objeto loginPage a partir
                                     // da classe LoginPage --> Sopro da vida
     inventoryPage = new InventoryPage(page)
@@ -29,5 +29,10 @@ When('clico em Login', async () => {
 Then('vou para a pagina {string} e vejo {string}', async (url, titulo_secao) => {
     await inventoryPage.verificarPaginaInventario(url, titulo_secao)
     await page.waitForTimeout(2000) // espera bruta de 2s // alfinete
-    await page.close()
+    // Solução 3 - Diego
+    // await browser.close()
+
+    // Solução 4 - Henrique
+    // Alterar a linha "test:bdd" no package.json
+    // "test:bdd": "cucumber-js --require features/support/**/*.js --exit"
 })
